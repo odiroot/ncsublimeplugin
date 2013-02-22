@@ -1,7 +1,13 @@
-from sublime import Region
+import sublime
 import sublime_plugin
 import subprocess
 import threading
+from sublime import Region
+from os.path import abspath, dirname, join
+
+
+_this_file  = __file__
+_this_dir = abspath(dirname(_this_file))
 
 
 class ExampleCommand(sublime_plugin.TextCommand):
@@ -50,7 +56,8 @@ def run_file_doctests(path):
 
 
 class DoctestExecutor(threading.Thread):
-    ext_command = "python -m doctest -v"
+    test_command = "python -m doctest -v"
+    parse_command = "python %s" % join(_this_dir, "docparser.py")
 
     def __init__(self, file_path):
         self.path = file_path
@@ -63,7 +70,8 @@ class DoctestExecutor(threading.Thread):
 
     def run(self):
         # Run command on given file path.
-        command = "%s %s" % (self.ext_command, self.path)
+        command = "%s %s | %s" % (self.test_command, self.path,
+            self.parse_command)
 
         # Execute external command, catch stdout/stderr.
         self.process = subprocess.Popen(command, shell=True,
