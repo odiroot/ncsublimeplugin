@@ -1,3 +1,4 @@
+import json
 import sublime
 import sublime_plugin
 import subprocess
@@ -18,20 +19,28 @@ class ExampleCommand(sublime_plugin.TextCommand):
 
         result = run_file_doctests(path)
         if result:
-            sublime.message_dialog("Doctest run results:\n%s" % result)
+            display_errors(view, json.loads(result))
 
 
-def markErrorLines(self, lines):
+def display_errors(view, error_def):
+    clearErrorMarks(view)
+
+    lines = [int(row["line"]) - 1 for row in error_def]
+
+    markErrorLines(view, lines)
+
+
+def markErrorLines(view, lines):
     	regions=[]
     	for line in lines:
-    		region = self.view.line(self.view.text_point(line, 0))
+    		region = view.line(view.text_point(line, 0))
     		regions.append(region)
-    	self.view.add_regions("error-liner", regions, "keyword", "bookmark", sublime.DRAW_OUTLINED)
+    	view.add_regions("error-liner", regions, "keyword", "bookmark", sublime.DRAW_OUTLINED)
 
 
-def clearErrorMarks(self):
-   	self.view.erase_regions("error-liner")
-   	self.view.erase_status('test-error-status')
+def clearErrorMarks(view):
+   	view.erase_regions("error-liner")
+   	view.erase_status('test-error-status')
 
 
 def run_file_doctests(path):

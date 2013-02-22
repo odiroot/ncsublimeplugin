@@ -29,7 +29,6 @@ def div(first, sec):
     return first / sec
 
 
-
 class Test(object):
     def mul(self, a, b):
         """ Multiplies input values and returns the result
