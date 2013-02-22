@@ -1,4 +1,5 @@
-import sublime, sublime_plugin
+from sublime import Region
+import sublime_plugin
 import subprocess
 import threading
 
@@ -13,6 +14,16 @@ class ExampleCommand(sublime_plugin.TextCommand):
         if result:
             sublime.message_dialog("Doctest run results:\n%s" % result)
 
+def markErrorLines(self, lines):
+    	regions=[]
+    	for line in lines:
+    		region = self.view.line(self.view.text_point(line, 0))
+    		regions.append(region)
+    	self.view.add_regions("error-liner", regions, "keyword", "bookmark", sublime.DRAW_OUTLINED)
+
+def clearErrorMarks(self):
+   	self.view.erase_regions("error-liner")
+   	self.view.erase_status('test-error-status')
 
 def run_file_doctests(path):
     u"Run doctests of a single Python module."
@@ -61,3 +72,4 @@ class DoctestExecutor(threading.Thread):
 
     def kill(self):
         self.process.kill()
+        
