@@ -92,3 +92,8 @@ class DoctestExecutor(threading.Thread):
 
     def kill(self):
         self.process.kill()
+
+
+class CleanMarksOnSave(sublime_plugin.EventListener):
+    def on_post_save(self, view):
+        clearErrorMarks(view)
