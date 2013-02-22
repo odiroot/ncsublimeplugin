@@ -16,6 +16,8 @@ class ExampleCommand(sublime_plugin.TextCommand):
         view = self.view
         # Get absolute path of currently edited file.
         path = view.file_name()
+        if not path:
+            return
 
         result = run_file_doctests(path)
         if result:
@@ -26,21 +28,23 @@ def display_errors(view, error_def):
     clearErrorMarks(view)
 
     lines = [int(row["line"]) - 1 for row in error_def]
+    view.set_status('test-error-status', error_def[0]["explanation"])
 
     markErrorLines(view, lines)
 
 
 def markErrorLines(view, lines):
-    	regions=[]
-    	for line in lines:
-    		region = view.line(view.text_point(line, 0))
-    		regions.append(region)
-    	view.add_regions("error-liner", regions, "keyword", "bookmark", sublime.DRAW_OUTLINED)
+    regions = []
+    for line in lines:
+        region = view.line(view.text_point(line, 0))
+        regions.append(region)
+    view.add_regions("error-liner", regions, "keyword", "bookmark",
+        sublime.DRAW_OUTLINED)
 
 
 def clearErrorMarks(view):
-   	view.erase_regions("error-liner")
-   	view.erase_status('test-error-status')
+    view.erase_regions("error-liner")
+    view.erase_status('test-error-status')
 
 
 def run_file_doctests(path):
