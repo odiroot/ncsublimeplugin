@@ -1,0 +1,76 @@
+Trying:
+    a=Test()
+Expecting nothing
+ok
+Trying:
+    a.mul(1,1)
+Expecting:
+    1
+ok
+Trying:
+    a.mul(10, 2)
+Expecting:
+    21
+**********************************************************************
+File "test.py", line 40, in test.Test.mul
+Failed example:
+    a.mul(10, 2)
+Expected:
+    21
+Got:
+    20
+Trying:
+    div(1,1)
+Expecting:
+    1
+ok
+Trying:
+    div(10, 2)
+Expecting:
+    5
+ok
+Trying:
+    div(2, 0)
+Expecting:
+    Traceback (most recent call last):
+        ...
+    ZeoDivisionError: integer division or modulo by zero
+**********************************************************************
+File "test.py", line 24, in test.div
+Failed example:
+    div(2, 0)
+Expected:
+    Traceback (most recent call last):
+        ...
+    ZeoDivisionError: integer division or modulo by zero
+Got:
+    Traceback (most recent call last):
+      File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/doctest.py", line 1254, in __run
+        compileflags, 1) in test.globs
+      File "<doctest test.div[2]>", line 1, in <module>
+        div(2, 0)
+      File "test.py", line 29, in div
+        return first / sec
+    ZeroDivisionError: integer division or modulo by zero
+Trying:
+    mul(1,1)
+Expecting:
+    1
+ok
+Trying:
+    mul(10, 2)
+Expecting:
+    20
+ok
+2 items had no tests:
+    test
+    test.Test
+1 items passed all tests:
+   2 tests in test.mul
+**********************************************************************
+2 items had failures:
+   1 of   3 in test.Test.mul
+   1 of   3 in test.div
+8 tests in 5 items.
+6 passed and 2 failed.
+***Test Failed*** 2 failures.

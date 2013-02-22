@@ -24,7 +24,20 @@ def div(first, sec):
     >>> div(2, 0)
     Traceback (most recent call last):
         ...
-    ZeroDivisionError: integer division or modulo by zero
+    ZeoDivisionError: integer division or modulo by zero
     """
     return first / sec
 
+
+
+class Test(object):
+    def mul(self, a, b):
+        """ Multiplies input values and returns the result
+
+        >>> a=Test()
+        >>> a.mul(1,1)
+        1
+        >>> a.mul(10, 2)
+        21
+        """
+        return a * b
