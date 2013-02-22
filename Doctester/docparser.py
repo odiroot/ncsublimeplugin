@@ -4,7 +4,7 @@ import re
 import json
 
 # Regexp for matching erronous doctest report
-ERROR_RE = re.compile('File\s+\"(?P<file>\w+\.py)\"\,'
+ERROR_RE = re.compile('File\s+\"(?P<file>.+?\.py)\"\,'
     '\s+line\s+(?P<line>\d+)\,\s+in\s+(?P<func>.*)$', re.MULTILINE)
 
 
