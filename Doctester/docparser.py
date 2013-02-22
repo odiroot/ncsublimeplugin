@@ -24,4 +24,6 @@ def error_line(doctest_out):
 
 
 if __name__ == '__main__':
-    print json.dumps(error_line(open(sys.argv[1]).read()))
+    text = sys.stdin.read()
+    errors = error_line(text)
+    print json.dumps(errors)
